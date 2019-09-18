@@ -1,0 +1,10 @@
+#!/bin/bash
+
+filename=$(sed 's/sections_in_progress\///g' <<< $1)
+filename=$(sed 's/\.md//g' <<< $filename)
+new_filename=$(sed 's/100_working_//g' <<< $1)
+
+jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=36000 --ExecutePreprocessor.allow_errors=False $new_filename.ipynb
+
+mv $new_filename.nbconvert.ipynb sections_executed/$new_filename.ipynb
+rm $new_filename.ipynb

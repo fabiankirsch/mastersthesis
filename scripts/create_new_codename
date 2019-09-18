@@ -1,0 +1,15 @@
+#!/bin/bash
+# helper script to generate a new codename for a variant
+
+# Feelings wordlist (source: https://thrivinglifenvc.org/feelings/)
+wordlist=(Compassionate Friendly Loving Sympathetic Tender Warm Empowered Open Proud Safe Secure Absorbed Alert Curious Engrossed Enchanted Entranced Fascinated Interested Intrigued Involved Spellbound Stimulated Amazed Awed Wonder Amazed Animated Ardent Aroused Astonished Dazzled Eager Energetic Enthusiastic Giddy Invigorated Lively Passionate Surprised Vibrant Blissful Ecstatic Elated Enthralled Exuberant Radiant Rapturous Thrilled Appreciative Moved Thankful Touched Expectant Encouraged Optimistic Amused Delighted Glad Happy Jubilant Pleased Tickled Calm Comfortable Centered Content Fulfilled Mellow Quiet Relaxed Relieved Satisfied Serene Still Tranquil Trusting Enlivened Rejuvenated Renewed Rested Restored Revived Apprehensive Dread Foreboding Frightened Panicked Petrified Scared Suspicious Terrified Wary Worried Anxious Tense Aggravated Dismayed Disgruntled Displeased Exasperated Frustrated Impatient Irritated Cranky Enraged Furious Incensed Indignant Irate Livid Outraged Resentful Ambivalent Baffled Bewildered Dazed Hesitant Lost Mystified Perplexed Puzzled Torn Ashamed Chagrined Flustered Mortified Animosity Appalled Contempt Disgusted Dislike Hate Horrified Hostile Repulsed Envious Jealous Longing Nostalgic Pining Wistful Agitated Alarmed Discombobulated Disconcerted Disturbed Distressed Perturbed Rattled Edgy Restless Shocked Startled Surprised Troubled Uncomfortable Uneasy Unsettled Upset Beat Burnt out Depleted Exhausted Lethargic Listless Sleepy Tired Weary Agony Anguished Bereaved Devastated Grief Heartbroken Hurt Lonely Miserable Regret Hopeless Depressed Dejected Despair Despondent Disappointed Discouraged Disheartened Forlorn Gloomy Hopeless Unhappy Fragile Guarded Helpless Insecure Leery Reserved Sensitive Shaky Alienated Aloof Apathetic Bored Cold Detached Distant Distracted Indifferent Numb Removed Uninterested Withdrawn)
+
+# Create codename from wordlist
+N=3
+codename=""
+for index in $(shuf --input-range=0-$(( ${#wordlist[*]} - 1 )) -n ${N})
+do
+    codename=$codename${wordlist[$index]}
+done
+
+echo $codename

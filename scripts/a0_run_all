@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# $1: filename without extension to convert and execute
+# $2: conda environment / jupyter kernel
+
+
+filename=$(sed 's/sections_in_progress\///g' <<< $1)
+filename=$(sed 's/\.md//g' <<< $filename)
+
+
+./scripts/b1_convert_md_to_ipynb $filename $2
+./scripts/b2_exec_ipynb_headless $filename
+./scripts/b3_convert_body_ipynb-execd_to_md $filename
+./scripts/c0_make_pdf

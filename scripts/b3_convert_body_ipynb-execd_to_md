@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# remove the prefix from the filename
+filename=$(sed 's/sections_in_progress\///g' <<< $1)
+filename=$(sed 's/\.md//g' <<< $filename)
+new_filename=sections_executed/$(sed 's/100_working_//g' <<< $1)
+
+# convert executed ipynb to markdown. Remove cells based on tags.
+jupyter nbconvert --to markdown  $new_filename.ipynb --TagRemovePreprocessor.remove_input_tags='{"hide_input"}' --TagRemovePreprocessor.remove_cell_tags='{"hide"}'
+
+# remove 'attachment:' from image paths produced by the jupyter notebook
+sed -i -e 's/attachment://g' $new_filename.md
+
+# convert escaped underscores to normal underscores (underscores are used for styling in markdown and pandoc is a little to careful here escaping underscores where there is no need)
+sed -i -e 's/\\_/_/g' $new_filename.md
+
+# Remove white space in the beginning of a line that has text. Outputs from jupyter cells are automatically intented by nbconvert in the output markdown file even if not indented in the original jupyter output cell. This can lead to formatting errors in the final PDF.
+sed -i -e "s/^[ \t]*//" $new_filename.md
+
+# Remove first few lines containing an unintended python code block
+tail -n +6 $new_filename.md > tmp.md
+mv tmp.md $new_filename.md

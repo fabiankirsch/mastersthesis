@@ -1,0 +1,4 @@
+#!/bin/bash
+cat sections_executed/0*.md > sections_executed/_full_thesis.md
+
+pandoc -s -o kirsch_fabian_masterthesis.pdf -F pandoc-crossref -F pandoc-citeproc --bibliography=references.bib -f markdown --csl=apa.csl -N sections_executed/_full_thesis.md
